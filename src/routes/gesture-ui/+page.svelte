@@ -319,4 +319,14 @@
     }
 </script>
 
+<button class = "px-2 bg-gray-500 rounded-2xl" onclick={toggleCamera}>
+  {detectorRunning ? 'Stop Camera' : 'Start Camera'}
+</button>
+
+<video bind:this={video} autoplay playsinline muted width="10" height="10"  class="fixed top-0 left-0 z-10 bottom-6 right opacity-0  ${detectorRunning ? "opacity-100" : "opacity-0" } ">
+</video>
+
+<canvas width="1280" height="720" class="fixed top-0 left-0 z-50 pointer-events-none w-full h-full ${detectorRunning ? "opacity-100" : "opacity-0"} " bind:this={canvas}>
+</canvas>
+
 

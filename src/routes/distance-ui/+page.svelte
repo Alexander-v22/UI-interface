@@ -11,6 +11,19 @@
   const getCenter = (points) =>
     points.reduce((acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 });
 
+
+  onMount(async () => {
+    await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
+    await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
+
+    const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+    videoEl.srcObject = stream;
+
+    videoEl.onloadedmetadata = () => {
+      detect();
+    };
+  });
+  
   async function estimateDistance(result) {
     const landmarks = result.landmarks;
     const leftEye = landmarks.getLeftEye();
@@ -60,18 +73,6 @@
 
     requestAnimationFrame(detect);
   }
-
-  onMount(async () => {
-    await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
-    await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
-
-    const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
-    videoEl.srcObject = stream;
-
-    videoEl.onloadedmetadata = () => {
-      detect();
-    };
-  });
 </script>
 
 <div class="flex flex-col items-center justify-center min-h-screen text-center space-y-6 ">
