@@ -5,7 +5,6 @@
     import { onMount } from 'svelte';
     import axios from 'axios';
 
-
     let video;
     let canvas;
     let ctx;
