@@ -3,7 +3,6 @@
     import * as tf from "@tensorflow/tfjs";
     import "@tensorflow/tfjs-backend-webgl";
     import { onMount, tick } from 'svelte';
-    import axios from 'axios';
 
     const {
         enableScroll = false,
@@ -11,7 +10,7 @@
         enableCursor = false,
         enableDrag = false,
         usePhysicsTransform = false,
-        ballEl
+        ballEl: incomingBallEl = null
     } = $props();
 
     let video;
@@ -48,6 +47,10 @@
 
     onMount(async () => {
         await tick(); // wait for DOM to mount
+
+          if (!ballEl) {
+            ballEl = document.querySelector(".draggable");
+        }
 
         if (ballEl) {
             ballWidth = ballEl.offsetWidth;
@@ -458,52 +461,92 @@
     }
 
     function handleClickGesture() {
-        if (!lastIndexTip) return;
+    if (!lastIndexTip) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / video.videoWidth;
+    const scaleY = canvas.height / video.videoHeight;
+
+    const scaledX = lastIndexTip.x * scaleX;
+    const scaledY = lastIndexTip.y * scaleY;
+
+    const canvasX = canvas.width - scaledX; // mirrored
+    const canvasY = scaledY;
+
+    const screenX = rect.left + (canvasX / canvas.width) * rect.width;
+    const screenY = rect.top + (canvasY / canvas.height) * rect.height;
+
+    const element = document.elementFromPoint(screenX, screenY);
+
+    if (element && element.classList.contains("btn-gesture")) {
+        element.classList.add("pressed");
+        // Store the original transform (drag position) for restoring later
+        const originalTransform = element.style.transform;
+
+        // Prevent layout shifts: keep same visual position
+        const rect = element.getBoundingClientRect();
+        const parentRect = element.offsetParent.getBoundingClientRect();
+        const offsetX = rect.left - parentRect.left;
+        const offsetY = rect.top - parentRect.top;
+
+        element.style.transition = "none"; // disable animation while freezing
+        element.style.transform = "none";  // clear transform to freeze
+        element.style.left = `${offsetX}px`;
+        element.style.top = `${offsetY}px`;
+        element.style.position = "absolute"; // ensures positioning works
+
+        element.classList.add("popped");
+
+        setTimeout(() => {
+        element.style.display = "none";
+        element.classList.remove("popped");
+
+        // Reset internal physics position to center of screen
+        const centerX = window.innerWidth / 2 - 240;
+        const centerY = 0
+        x = centerX;
+        y = centerY;
+        vx = 0;
+        vy = 9.8;
+
+        // Reset DOM transform (this will be picked up by physics loop)
+        element.style.left = "";
+        element.style.top = "";
+        element.style.position = "";
+        element.style.transform = `translate(${centerX}px, ${centerY}px)`;
+
+        element.setAttribute("data-x", 0);
+        element.setAttribute("data-y", 0);
+
+        setTimeout(() => {
+            element.style.display = "flex";
+            element.style.transition = "all 0.3s ease";
+        }, 50);
+        }, 400);
 
 
-        const rect = canvas.getBoundingClientRect();
-
-        const scaleX = canvas.width / video.videoWidth;
-        const scaleY = canvas.height / video.videoHeight;
-
-        const scaledX = lastIndexTip.x * scaleX;
-        const scaledY = lastIndexTip.y * scaleY;
-
-        const canvasX = canvas.width - scaledX; // mirrored
-        const canvasY = scaledY;
-
-        // Convert canvas space to page-relative screen space
-        const screenX = rect.left + (canvasX / canvas.width) * rect.width;
-        const screenY = rect.top + (canvasY / canvas.height) * rect.height;
-
-        const element = document.elementFromPoint(screenX, screenY);
-
-        console.log("Clicking on:", element);
-
-        if (element) {
-            // Add visual pressed feedback if it's a gesture button
-            if (element.classList.contains('btn-gesture')) {
-                element.classList.add('pressed');
-                // Force repaint to ensure transition applies
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        element.classList.remove('pressed');
-                    });
-                });
-            }
-
-            // Dispatch actual click
-            element.dispatchEvent(new MouseEvent("mouseup", {
-                bubbles: true,
-                cancelable: true,
-                composed: true,
-                clientX: screenX,
-                clientY: screenY,
-                view: window
-            }));
-        }
 
     }
+
+
+        // Cleanup press visual
+        requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            element.classList.remove("pressed");
+        });
+        });
+
+        // Dispatch optional click
+        element.dispatchEvent(new MouseEvent("mouseup", {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+        clientX: screenX,
+        clientY: screenY,
+        view: window
+        }));
+    }
+
 
     function handleLeftNavigationPalmGesture(hand) {
         const middleFingerMCP = hand.keypoints[9];
@@ -655,7 +698,7 @@
 
         if (isFist) {
             if (!isHolding && element) {
-                console.log("Fist detected — Pressing on element:", element);
+                //console.log("Fist detected — Pressing on element:", element);
                 isHolding = true;
                 holdElement = element;
 
@@ -698,7 +741,7 @@
         }
     }
 
-
+    let ballEl = incomingBallEl || null;
     let ballWidth = 96;
     let ballHeight = 96;
 
@@ -825,20 +868,30 @@
                 x += vx;
                 y += vy;
 
-                const floor = window.innerHeight / 2 - 48;
+                const floor = window.innerHeight/2 -96;
+                const roof = -96;
 
                 if (y > floor) {
                     y = floor;
                     vy *= -0.7; // bounce back up (dampened)
                     vx *= 0.9;  // reduce horizontal speed slightly
                 }
+                if (y < roof){
+                    y = roof
+                    
+                    vy *= -0.7; // bounce back down (dampened)
+                    vx *= 0.9;  // reduce horizontal speed slightly
+
+                }
 
                 // Wall collisions (optional, keep it clean)
-                const maxX = window.innerWidth - 96;
+                const maxX = window.innerWidth - 288;
+
                 if (x < 0 || x > maxX) {
                     vx *= -0.7;
                     x = Math.max(0, Math.min(x, maxX));
                 }
+
 
                 vx *= friction;
                 vy *= friction;
@@ -886,18 +939,49 @@
 <!-- This bottom needs to be inputed into the page directly for it work don't know why it wont work if its imported -->
  
 <style>
-  .btn-gesture.hovered {
-    background-color: #0015ff !important; /* yellow highlight */
+  :global(.btn-gesture.hovered){
+    /* yellow highlight */
     transform: scale(1.08);
     transition: all 0.2s ease-in-out;
   }
 
-  .btn-gesture.pressed {
-    background-color: rgb(255, 3, 32) !important; /* tomato color when clicked */
+    :global(.btn-gesture.pressed) {
+    /* tomato color when clicked */
     transform: scale(1);
     transition: all .01s ease;
   }
+
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.8);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+
+  .ball.popped {
+    animation: pop 0.4s forwards;
+  }
+
+  .ball-wrapper {
+    position: absolute;
+    /* Width/height optional if needed */
+  }
+
+
+  .ball.popped {
+    animation: pop 0.4s forwards;
+  }
 </style>
 
-<span class="btn-gesture hovered" style="display: none"></span>
-<span class="btn-gesture pressed" style="display: none"></span>
+<span class="btn-gesture hovered " style="display: none"></span>
+<span class="btn-gesture pressed " style="display: none"></span>
+<span class="ball popped" style="display: none"></span>
+<span class="ball-wrapper" style="display: none"></span>
