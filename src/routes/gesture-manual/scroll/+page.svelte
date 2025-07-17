@@ -6,7 +6,7 @@
 
 <GestureUI enableDrag={false} enableClick={true} enableScroll={true}  enableCursor={true}/>
 
-<main class="flex-1 max-w-6xl mx-auto px-4 justify-center">
+<main class="flex-1 max-w-6xl mx-auto px-20 justify-center">
     <h2 class="py-2 text-6xl text-center">Scrolling Gesture</h2>
     <p class="text-lg mt-10">
     This demo lets you explore information about fighter aircraft using only hand gesture.

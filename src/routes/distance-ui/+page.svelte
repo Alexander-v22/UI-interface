@@ -119,9 +119,11 @@
 
 </script>
 
-<button class="px-2 text-white bg-gray-500 rounded-2xl p-2 fixed " onclick={toggleCamera}>
+
+<button class="px-2 text-white bg-gray-700 rounded-2xl p-2 fixed " onclick={toggleCamera}>
   {detectorRunning ? 'Stop Camera' : 'Start Camera'}
 </button>
+
 
 <main class="flex-1 max-w-6xl mx-auto px-20 justify-center">
   <h1 class="text-7xl py-5 text-center font-semibold mb-5">Face Distance UI</h1>
@@ -161,8 +163,9 @@
   </section>
 
   <p class="text-4xl text-center mt-10"> Start your camera and watch the interface adjust. </p>
-
 </main>
+
+
 
 
 <h1 class = "text-center font-semibold text-6xl mt-20">Face-Interface Adpater Demo</h1>
@@ -176,9 +179,9 @@
     Estimated distance: {distance}
   </p> -->
 
-
-
   <h1 class={`transition-all duration-300 ease-in-out p-4 text-white bg-gray-500 border-2 border-gray-900 rounded-2xl ${messageSize} ${detectorRunning ? "opacity-100" : "opacity-0"}`}  >
     {message}
   </h1>
+
+
 </div>

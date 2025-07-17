@@ -8,9 +8,6 @@
 <GestureUI enableDrag={true} enableClick={true} enableScroll={false}  enableCursor={true}  usePhysicsTransform={true} {ballEl} />
 
 
-
-
-
 <style>
   :global(.btn-gesture.hovered){
     /* yellow highlight */

@@ -1,39 +1,37 @@
 <script>
   import '../app.css';
-    import GestureUi from './gesture-manual/GestureUI.svelte';
-  let { children } = $props();
-  let gestureDropdown= $state(false);
-
+  let gestureDropdown = false;
 </script>
 
 <div class="flex min-h-screen">
-  <nav class="flex flex-col bg-gray-300 w-40 p-1">
-    <a class="py-2 px-3 font-semibold hover:underline fixed top-2" href="/home">Home</a>
-    <a class="py-2 px-3 font-semibold hover:underline fixed top-12" href="/distance-ui">Face.ui</a>
-    
+  <!-- Sidebar -->
+  <aside class="w-48 bg-gray-700 text-white p-4 sticky top-0 h-screen flex flex-col space-y-2">
+    <a class="py-2 px-3 font-semibold hover:underline" href="/home">Home</a>
+    <a class="py-2 px-3 font-semibold hover:underline" href="/distance-ui">Face Distance UI</a>
 
-    <div class = "relative">
-      <button class="py-2 px-3 font-semibold hover:underline fixed top-22" 
-      onclick={() => gestureDropdown =!gestureDropdown} >Gesture Manual</button>
+    <div>
+      <button
+        class="py-2 px-3 font-semibold hover:underline w-full text-left"
+        on:click={() => gestureDropdown = !gestureDropdown}
+      >
+        Gesture Manual
+      </button>
 
-        {#if gestureDropdown}
-          <div class = "flex flex-col pl-3 ">
-              <a class="py-2 px-3 font-semibold hover:underline fixed top-30" href="/gesture-manual">Welcome</a>
-              <a class="py-2 px-3 font-semibold hover:underline fixed top-38" href="/gesture-manual/landmarks">Introduction</a>
-              <a class="py-2 px-3 font-semibold hover:underline fixed top-46" href="/gesture-manual/cursorAndBtn">Cursor & button</a>
-              <a class="py-2 px-3 font-semibold hover:underline fixed top-54" href="/gesture-manual/scroll">Scrolling</a>
-              <a class="py-2 px-3 font-semibold hover:underline fixed top-62" href="/gesture-manual/drag">Drag</a>
-              <a class="py-2 px-3 font-semibold hover:underline fixed top-70" href="/gesture-manual/playground">Playground</a>
-
-          </div>
-        {/if}
-
+      {#if gestureDropdown}
+        <div class="ml-4 mt-1 space-y-1">
+          <a class="block py-1 px-2 hover:underline" href="/gesture-manual">Welcome</a>
+          <a class="block py-1 px-2 hover:underline" href="/gesture-manual/landmarks">Introduction</a>
+          <a class="block py-1 px-2 hover:underline" href="/gesture-manual/cursorAndBtn">Cursor & Button</a>
+          <a class="block py-1 px-2 hover:underline" href="/gesture-manual/scroll">Scrolling</a>
+          <a class="block py-1 px-2 hover:underline" href="/gesture-manual/drag">Drag</a>
+          <a class="block py-1 px-2 hover:underline" href="/gesture-manual/playground">Playground</a>
+        </div>
+      {/if}
     </div>
-  </nav>
+  </aside>
 
-  <main class="flex-1 overflow-y-auto p-4">
-    <slot/> 
+  <!-- Main content -->
+  <main class="flex-1 overflow-y-auto p-6 h-min-screen">
+    <slot />
   </main>
-
-
 </div>

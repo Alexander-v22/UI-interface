@@ -8,7 +8,7 @@
 
 
 
-<main class=" flex-1 max-w-6xl mx-auto px-4 justify-center">
+<main class=" flex-1 max-w-6xl mx-auto px-20 justify-center">
     <h1 class="text-5xl py-5 text-center">Hand Landmark System</h1>
 
     <h4 class="py-2 mt-6 text-2xl"> Try This Out</h4>
