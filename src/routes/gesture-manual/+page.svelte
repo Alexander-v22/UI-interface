@@ -35,7 +35,5 @@
     </div>
     </section>
 
-    <p class = "text-6xl text-center mt-10"> All you have to do is start you camera and try our demos!</p>
-
     <p class = "text-4xl text-center mt-10"> Remember to keep some distance between the computer and yourself.</p>
 </main>
