@@ -917,7 +917,7 @@
     }
 </script>
 
-<button class = "p-2 bg-gray-500 rounded-2xl text-white fixed" onclick={toggleCamera}>
+<button class = "p-2 bg-gray-700 rounded-2xl text-white fixed top-3 left-50" onclick={toggleCamera}>
   {detectorRunning ? 'Stop Camera' : 'Start Camera'}
 </button>   
 
