@@ -264,14 +264,12 @@
         }
     }
 
-
     function pointerRH(hand) {
         const indexTip = hand.keypoints[8];
         const indexMCP = hand.keypoints[5];
         return indexTip.y < indexMCP.y
     }
     
-
     function palmLeftPointer(hand){
         const middleFingerMCP = hand.keypoints[9];
         const thumbCMC = hand.keypoints[1];
@@ -461,92 +459,92 @@
     }
 
     function handleClickGesture() {
-    if (!lastIndexTip) return;
+        if (!lastIndexTip) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / video.videoWidth;
-    const scaleY = canvas.height / video.videoHeight;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / video.videoWidth;
+        const scaleY = canvas.height / video.videoHeight;
 
-    const scaledX = lastIndexTip.x * scaleX;
-    const scaledY = lastIndexTip.y * scaleY;
+        const scaledX = lastIndexTip.x * scaleX;
+        const scaledY = lastIndexTip.y * scaleY;
 
-    const canvasX = canvas.width - scaledX; // mirrored
-    const canvasY = scaledY;
+        const canvasX = canvas.width - scaledX; // mirrored
+        const canvasY = scaledY;
 
-    const screenX = rect.left + (canvasX / canvas.width) * rect.width;
-    const screenY = rect.top + (canvasY / canvas.height) * rect.height;
+        const screenX = rect.left + (canvasX / canvas.width) * rect.width;
+        const screenY = rect.top + (canvasY / canvas.height) * rect.height;
 
-    const element = document.elementFromPoint(screenX, screenY);
+        const element = document.elementFromPoint(screenX, screenY);
 
-    if (element && element.classList.contains("btn-gesture")) {
-        element.classList.add("pressed");
-        // Store the original transform (drag position) for restoring later
-        const originalTransform = element.style.transform;
+        if (element && element.classList.contains("btn-gesture")) {
+            element.classList.add("pressed");
 
-        // Prevent layout shifts: keep same visual position
-        const rect = element.getBoundingClientRect();
-        const parentRect = element.offsetParent.getBoundingClientRect();
-        const offsetX = rect.left - parentRect.left;
-        const offsetY = rect.top - parentRect.top;
+            // 🏀 Only apply pop + physics reset to the ball
+            if (element.classList.contains("ball")) {
+                // Store current visual position
+                const originalTransform = element.style.transform;
+                const rect = element.getBoundingClientRect();
+                const parentRect = element.offsetParent.getBoundingClientRect();
+                const offsetX = rect.left - parentRect.left;
+                const offsetY = rect.top - parentRect.top;
 
-        element.style.transition = "none"; // disable animation while freezing
-        element.style.transform = "none";  // clear transform to freeze
-        element.style.left = `${offsetX}px`;
-        element.style.top = `${offsetY}px`;
-        element.style.position = "absolute"; // ensures positioning works
+                // Freeze current position
+                element.style.transition = "none";
+                element.style.transform = "none";
+                element.style.left = `${offsetX}px`;
+                element.style.top = `${offsetY}px`;
+                element.style.position = "absolute";
+                element.classList.add("popped");
 
-        element.classList.add("popped");
+                // Wait for pop animation to finish
+                setTimeout(() => {
+                    element.style.display = "none";
+                    element.classList.remove("popped");
 
-        setTimeout(() => {
-        element.style.display = "none";
-        element.classList.remove("popped");
+                    // Reset physics state to top-center near title
+                    const centerX = window.innerWidth / 2 - 240;
+                    const centerY = 0;
+                    x = centerX;
+                    y = centerY;
+                    vx = 0;
+                    vy = 9.8;
 
-        // Reset internal physics position to center of screen
-        const centerX = window.innerWidth / 2 - 240;
-        const centerY = 0
-        x = centerX;
-        y = centerY;
-        vx = 0;
-        vy = 9.8;
+                    // Apply new transform that physics loop picks up
+                    element.style.left = "";
+                    element.style.top = "";
+                    element.style.position = "";
+                    element.style.transform = `translate(${centerX}px, ${centerY}px)`;
 
-        // Reset DOM transform (this will be picked up by physics loop)
-        element.style.left = "";
-        element.style.top = "";
-        element.style.position = "";
-        element.style.transform = `translate(${centerX}px, ${centerY}px)`;
+                    // Reset any drag-related state
+                    element.setAttribute("data-x", 0);
+                    element.setAttribute("data-y", 0);
 
-        element.setAttribute("data-x", 0);
-        element.setAttribute("data-y", 0);
+                    // Bring ball back
+                    setTimeout(() => {
+                        element.style.display = "flex";
+                        element.style.transition = "all 0.3s ease";
+                    }, 50);
+                }, 400);
+            }
 
-        setTimeout(() => {
-            element.style.display = "flex";
-            element.style.transition = "all 0.3s ease";
-        }, 50);
-        }, 400);
+            // Cleanup press effect after frame
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    element.classList.remove("pressed");
+                });
+            });
 
-
-
+            // Optional simulated mouseup click
+            element.dispatchEvent(new MouseEvent("mouseup", {
+                bubbles: true,
+                cancelable: true,
+                composed: true,
+                clientX: screenX,
+                clientY: screenY,
+                view: window
+            }));
+        }
     }
-
-
-        // Cleanup press visual
-        requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            element.classList.remove("pressed");
-        });
-        });
-
-        // Dispatch optional click
-        element.dispatchEvent(new MouseEvent("mouseup", {
-        bubbles: true,
-        cancelable: true,
-        composed: true,
-        clientX: screenX,
-        clientY: screenY,
-        view: window
-        }));
-    }
-
 
     function handleLeftNavigationPalmGesture(hand) {
         const middleFingerMCP = hand.keypoints[9];
@@ -675,7 +673,6 @@
             hoveredElementsByHand[handId] = null;
         }
     }
-
 
     function handleRightPressAndHold(hand) {
         const isFist = isFistGesture(hand);
@@ -857,7 +854,6 @@
         }
     }
 
-
     function updatePosition() {
         if (physicsStarted) return;
         physicsStarted = true;
@@ -919,15 +915,9 @@
         }
         return false;
     }
-
-
-
-
-    
-
 </script>
 
-<button class = "p-2 bg-gray-700 rounded-2xl text-white fixed left-50 top-3" onclick={toggleCamera}>
+<button class = "p-2 bg-gray-500 rounded-2xl text-white fixed" onclick={toggleCamera}>
   {detectorRunning ? 'Stop Camera' : 'Start Camera'}
 </button>   
 
