@@ -1,38 +1,34 @@
-# sv
+#  Gesture-Controlled UI Library & Smart UX Extensions
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A modular **Svelte-based UI component and interaction system** to show **hand gesture detection** and **face distance awareness**. 
 
-## Creating a project
+This library provides intelligent, hands-free interaction for web idealinterface that could be useful for accessibility, futuristic interfaces, or creative web experiences.
 
-If you're seeing this, you've probably already done this step. Congrats!
+---
 
-```bash
-# create a new project in the current directory
-npx sv create
+## Features
 
-# create a new project in my-app
-npx sv create my-app
-```
+-**Gesture-Control UI Logic**
+  - Hand tracking using TensorFlow's MediaPipe Hands
+  - Detects:
+    - Index-based cursor movement
+    - Fist-to-open drag and drop
+    - Press-and-hold gestures
+    - "Okay" click gesture (index + thumb pinch)
+    - Scroll gestures (up/down flicks)
+  - Draggable object physics (gravity, bounce, inertia)
+  - Hover, click, press animations
+  - Canvas-based visual feedback
 
-## Developing
+- **Face Distance UI** (optional module)
+  - Adjusts interface elements or triggers logic based on user's distance from the webcam
+  - Useful for engagement detection, accessibility, or UI resizing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-```bash
-npm run dev
+---
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Live Demo
 
-## Building
+[Try it here](https://avm-page.vercel.app/)
 
-To create a production version of your app:
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.

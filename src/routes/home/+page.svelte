@@ -1,5 +1,5 @@
 <main class="flex-1 max-w-6xl mx-auto px-4 justify-center">
-  <h1 class="text-7xl py-5 text-center font-semibold mb-5">Gesture & Face-Aware UI</h1>
+  <h1 class="text-7xl py-5 text-center font-semibold mb-5">Gesture & Face-Awareness UI</h1>
 
   <h2 class="py-2 text-2xl">Touchless Interfaces. Real-Time Feedback.</h2>
   <p class="text-lg px-4">

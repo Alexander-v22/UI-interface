@@ -1,8 +1,8 @@
 <main class = "flex-1 max-w-6xl mx-auto px-4 justify-center">
-    <h1 class="text-7xl py-5 text-center font-semibold mb-5">The Handie Manual!</h1>
+    <h1 class="text-7xl py-5 text-center font-semibold mb-5">Gesture Control</h1>
 
    
-    <h2 class = "py-2 text-2xl"> Welcome to the Gesture Manual!</h2>
+    <h2 class = "py-2 text-2xl"> Welcome to The Gesture Control Component-Style Library</h2>
         <p class="text-lg px-4"> This interactive application uses real-time hand tracking to allow users to navigate and control web pages using simple hand gestures no mouse or keyboard required.</p>
 
 
