@@ -4,45 +4,47 @@
   import 'prismjs/components/prism-javascript';
   import { onMount } from 'svelte';
 
-  const codeSample = `function isScrollDownGesture(hand) {
-  // index tip below MCP (like a finger flicking down)
-  const indexTip = hand.keypoints[8];
-  const indexMCP = hand.keypoints[5];
+  const codeSample = `
+  // Index tip below MCP (like a finger flicking down)
+  function isScrollDownGesture(hand) {
+      
+      const indexTip = hand.keypoints[8];
+      const indexMCP = hand.keypoints[5];
 
-  return indexTip.y > indexMCP.y + 40; // offset for better trigger
-}
-
-// Index finger "Flicks" down to represent scrolling down
-function isScrollUpGesture(hand) {
-  // index tip and middle finger tip above MCP (like a finger flicking down)
-  const indexTip = hand.keypoints[8];
-  const indexMCP = hand.keypoints[5];
-
-  const middleTip = hand.keypoints[12];
-  const middleMCP = hand.keypoints[9];
-
-  const indexIsUp = indexTip.y < indexMCP.y - 20;
-  const middleIsUp = middleTip.y < middleMCP.y - 20;
-
-  return indexIsUp && middleIsUp;
-}
-// Index and middle finger both flip up to represent scrolling up
-
-function tryScrollDown() {
-  const now = Date.now();
-  if (now - lastScrollTime > 1000) {
-    window.scrollBy({ top: 500, behavior: 'smooth' });
-    lastScrollTime = now;
+      return indexTip.y > indexMCP.y + 40; // offset for better trigger
   }
-}
 
-function tryScrollUp() {
-  const now = Date.now();
-  if (now - lastScrollTime > 1000) {
-    window.scrollBy({ top: -500, behavior: 'smooth' });
-    lastScrollTime = now;
+  // Index tip and middle finger tip above MCP (like a finger flicking down)
+  function isScrollUpGesture(hand) {
+      const indexTip = hand.keypoints[8];
+      const indexMCP = hand.keypoints[5];
+
+      const middleTip = hand.keypoints[12];
+      const middleMCP = hand.keypoints[9];
+
+      const indexIsUp= indexTip.y < indexMCP.y - 20;
+      const middleIsUp= middleTip.y < middleMCP.y - 20; 
+
+      return indexIsUp && middleIsUp ;
   }
-}`.trim();
+
+  function tryScrollDown() {
+      const now = Date.now();
+      if (now - lastScrollTime > 1000) {
+          window.scrollBy({ top: 500, behavior: 'smooth' });
+          lastScrollTime = now;
+      }
+  }
+
+  function tryScrollUp() {
+      const now = Date.now();
+      if (now - lastScrollTime > 1000) {
+          window.scrollBy({ top: -500, behavior: 'smooth' });
+          lastScrollTime = now;
+      }
+  }
+      
+    `.trim();
 
   let codeElement;
   let copied = false;

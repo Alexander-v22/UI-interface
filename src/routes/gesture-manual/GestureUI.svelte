@@ -97,7 +97,7 @@
                 modelType: "lite",
                 solutionPath: "https://cdn.jsdelivr.net/npm/@mediapipe/hands",
             }
-        );
+        ); // model that were running
 
         detectorRunning = true;
         drawLoop(); // start the hand detection loop
@@ -135,17 +135,13 @@
     async function drawLoop() {
 
     animationFrameId = requestAnimationFrame(drawLoop);
-        //calls its self at the browesrs frame rate 
         if (!model || !video || video.readyState !== 4) return;
-        //make sure everything is loaded
-
         predictions = await model.estimateHands(video);
 
+        // Ensures there is no flickering 
         if (predictions.length > 0) {
             stableHands = predictions;
         }
-        //stable for no flickering logic
-
 
         if (shouldUpdate(Date.now())) {
             drawHands(stableHands, {
@@ -217,7 +213,7 @@
 
         ctx.restore();
         
-        // Now safely run gesture logic after drawing is complete
+        // Now safely run gesture logic after drawing is complete to avoid flicerking
         for (const { hand, isCursorHand, isClickHand } of gestureQueue) {
             const isFist = isFistGesture(hand);
             const isOpen = !isFist;
@@ -276,7 +272,6 @@
         return middleFingerMCP.y < thumbCMC.y;
     }
 
-    //isnt being used right now 
      function palmRightPointer(hand){
         const middleFingerMCP = hand.keypoints[9];
         const thumbCMC = hand.keypoints[1];
@@ -296,7 +291,6 @@
         const threshold = 30
         
         return  distance < threshold;
-        // this basically 
     }
 
         // helper function for the okay clicker using the right hand 
@@ -318,7 +312,7 @@
         
 
     function isFistGesture(hand) {
-        const fingerTips = [8, 12, 16, 20];     // Index → Pinky
+        const fingerTips = [8, 12, 16, 20];     // Index to Pinky
         const fingerMCPs = [5, 9, 13, 17];      // Their base joints
 
         const wrist = hand.keypoints[0];
@@ -385,17 +379,17 @@
     //     return extendedFingers === 5;
     // }
 
+    // Index tip below MCP (like a finger flicking down)
     function isScrollDownGesture(hand) {
-        // index tip below MCP (like a finger flicking down)
+        
         const indexTip = hand.keypoints[8];
         const indexMCP = hand.keypoints[5];
 
         return indexTip.y > indexMCP.y + 40; // offset for better trigger
     }
 
-    //index finger "Flicks" down to represent scrolling down
+    // Index tip and middle finger tip above MCP (like a finger flicking down)
     function isScrollUpGesture(hand) {
-        // index tip and middle finger tip above MCP (like a finger flicking down)
         const indexTip = hand.keypoints[8];
         const indexMCP = hand.keypoints[5];
 
@@ -408,7 +402,6 @@
         return indexIsUp && middleIsUp ;
     }
 
-    //Index and middle finger both flip up to represent scrolling up
     function tryScrollDown() {
         const now = Date.now();
         if (now - lastScrollTime > 1000) {
@@ -479,7 +472,7 @@
         if (element && element.classList.contains("btn-gesture")) {
             element.classList.add("pressed");
 
-            // 🏀 Only apply pop + physics reset to the ball
+            // Only apply pop + physics reset to the ball
             if (element.classList.contains("ball")) {
                 // Store current visual position
                 const originalTransform = element.style.transform;
