@@ -4,7 +4,7 @@ A modular **Svelte-based UI component and interaction system** showcasing **hand
 
 ---
 
-## 📌 Notes
+## 📌 Project Origin
 
 This project originally started during my time with the **Duke Code+ 2025** program. You can find the official GitLab version [here](https://gitlab.oit.duke.edu/codeplus/ui-inputs), but this version represents my own personal take with continued improvements and added experimental features.
 
