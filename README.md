@@ -41,7 +41,8 @@ This project originally started during my time with the **Duke Code+ 2025** prog
 
 ## Live Demo
 
-👉 [Try the Interactive Demo Here](https://avm-page.vercel.app/)  
+[Try the Interactive Demo Here](https://avm-page.vercel.app/)  
+
 Showcases gesture input combined with a physics engine for smooth, interactive web control.
 
 ---
