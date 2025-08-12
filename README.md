@@ -46,4 +46,6 @@ This project originally started during my time with the **Duke Code+ 2025** prog
 Showcases gesture input combined with a physics engine for smooth, interactive web control.
 
 ---
+## Author
+Alexander Valdovinos Mena.
 
