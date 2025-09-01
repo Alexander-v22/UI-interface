@@ -36,5 +36,16 @@
     </div>
   </section>
 
-  <p class="text-4xl text-center mt-10"> Try the demos by starting your camera and interact!</p>
+    <p class="text-red-600 text-center mt-6 text-lg">
+     For best results, use a desktop or larger screen. When you first allow camera access, it may take a few seconds to initialize.
+    If anything seems off, simply refresh the page.
+  </p>
+
+    <p class="text-red-600 text-center mt-2 text-lg">
+     Tips: Stay 2–4 ft away from your camera, ensure good lighting, and keep your hands/face clearly visible for smoother tracking.
+  </p>
+
+
+
+  <p class="text-4xl text-center mt-10"> Try the demos by starting your camera and interact! </p>
 </main>
