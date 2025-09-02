@@ -26,63 +26,61 @@
 <span class="btn-gesture hovered" style="display: none"></span>
 <span class="btn-gesture pressed" style="display: none"></span>
 
-<main class="flex-1 max-w-6xl mx-auto px-20 justify-center">
+<main class="flex-1 max-w-6xl mx-auto px-4 sm:px-6 md:px-10 lg:px-20 justify-center">
 
-  <h1 class="text-5xl py-5 text-center">Cursor & Button Gesture</h1>
+  <h1 class="text-3xl sm:text-4xl md:text-5xl py-5 text-center">Cursor & Button Gesture</h1>
 
-    <p class="text-lg mt-5 ">
-        This demo lets you experiment with gesture-based controls to interact with buttons. Below you can find a GIF demonstrating the basics and <strong>further down</strong> you can find instructions as well as the <strong>practice demo</strong>.
-    </p>
-    <section >
-        <img src="/video-demos/CursorANdBtn.gif" alt="Curser And Button" class="mt-5 rounded-xl shadow-lg w-[400px] mx-auto" />
-    </section>
+  <p class="text-base sm:text-lg mt-5 text-center md:text-left">
+    This demo lets you experiment with gesture-based controls to interact with buttons. Below you can find a GIF demonstrating the basics and <strong>further down</strong> you can find instructions as well as the <strong>practice demo</strong>.
+  </p>
 
+  <section>
+    <img src="/video-demos/CursorANdBtn.gif"
+         alt="Curser And Button"
+         class="mt-5 rounded-xl shadow-lg w-full max-w-[400px] mx-auto" />
+  </section>
 
+  <!-- Instructions -->
+  <div class="flex flex-col md:flex-row gap-6 px-2 sm:px-4 md:px-10 mt-6">
+    <div class="flex-1">
+      <h2 class="py-2 text-xl sm:text-2xl mt-4">Using Your Hand as a Cursor</h2>
+      <p class="text-base sm:text-lg px-2 sm:px-4">
+        Your <strong>right hand</strong> acts as a virtual mouse. The tip of your <strong>index finger</strong> (landmark 8) is tracked in real-time and used as a pointing tool.
+      </p>
 
-
-
-    <div class = "flex flex-rows-2 px-10">
-        <div>
-            <h2 class="py-2 text-2xl mt-4"> Using Your Hand as a Cursor</h2>
-            <p class="text-lg px-4">
-                Your <strong>right hand</strong> acts as a virtual mouse. The tip of your <strong>index finger</strong> (landmark 8) is tracked in real-time and used as a pointing tool.
-            </p>
-
-            <ul class="list-disc px-10 text-lg mt-2">
-                <li>The index fingertip moves across the screen like a mouse cursor.</li>
-                <li>Tracking works best when your finger is extended and visible to the camera.</li>
-                <li>The system updates the fingertip position around 30 times per second.</li>
-            </ul>
-        </div>
-
-        <div>
-            <h2 class="py-2 text-2xl mt-4"> Clicking with a Gesture</h2>
-            <p class="text-lg px-4">
-                The <strong>left hand</strong> is used to perform a click gesture. A "click" is detected when your <strong>thumb</strong> and <strong>index finger</strong> come close together.
-            </p>
-
-            <ul class="list-disc px-10 text-lg mt-2">
-                <li>The app measures the distance between the index tip (8) and thumb tip (4).</li>
-                <li>If they are within a small threshold (about 30 pixels apart), it triggers a virtual click.</li>
-                <li>The click is dispatched to the DOM element located under the <strong>right-hand</strong> cursor.</li>
-                <li>A cooldown of ~900ms prevents repeated accidental clicks.</li>
-            </ul>
-        </div>
-
+      <ul class="list-disc px-6 sm:px-10 text-base sm:text-lg mt-2">
+        <li>The index fingertip moves across the screen like a mouse cursor.</li>
+        <li>Tracking works best when your finger is extended and visible to the camera.</li>
+        <li>The system updates the fingertip position around 30 times per second.</li>
+      </ul>
     </div>
-    
-    <section class="max-w-6xlmx-auto px-4 py-8">
-            <h2 class="text-3xl font-bold mb-6 text-center"> Gesture-Tested Buttons</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 ">
 
-            <button class=" btn-gesture bg-blue-600 text-white p-10 text-4xl rounded-xl">Test Button</button>
-            <button class="btn-gesture bg-green-600 text-white p-10 text-4xl rounded-xl">Test Button</button>
-            <button class="btn-gesture bg-red-600 text-white p-10 text-4xl rounded-xl">Test Button</button>
-    
-            </div>
-    </section>
+    <div class="flex-1">
+      <h2 class="py-2 text-xl sm:text-2xl mt-4">Clicking with a Gesture</h2>
+      <p class="text-base sm:text-lg px-2 sm:px-4">
+        The <strong>left hand</strong> is used to perform a click gesture. A "click" is detected when your <strong>thumb</strong> and <strong>index finger</strong> come close together.
+      </p>
+
+      <ul class="list-disc px-6 sm:px-10 text-base sm:text-lg mt-2">
+        <li>The app measures the distance between the index tip (8) and thumb tip (4).</li>
+        <li>If they are within a small threshold (about 30 pixels apart), it triggers a virtual click.</li>
+        <li>The click is dispatched to the DOM element located under the <strong>right-hand</strong> cursor.</li>
+        <li>A cooldown of ~900ms prevents repeated accidental clicks.</li>
+      </ul>
+    </div>
+  </div>
   
+  <!-- Buttons -->
+  <section class="px-2 sm:px-4 py-8">
+    <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-center">Gesture-Tested Buttons</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+      <button class="btn-gesture bg-blue-600 text-white py-6 sm:py-10 text-2xl sm:text-4xl rounded-xl">Test Button</button>
+      <button class="btn-gesture bg-green-600 text-white py-6 sm:py-10 text-2xl sm:text-4xl rounded-xl">Test Button</button>
+      <button class="btn-gesture bg-red-600 text-white py-6 sm:py-10 text-2xl sm:text-4xl rounded-xl">Test Button</button>
+    </div>
+  </section>
 
 </main>
+
 
 <GestureCodeDisplay/>

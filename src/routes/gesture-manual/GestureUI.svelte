@@ -910,9 +910,19 @@
     }
 </script>
 
-<button class = "p-2 bg-gray-700 rounded-2xl text-white fixed top-3 left-50" onclick={toggleCamera}>
+<button
+  class="fixed z-50
+         top-[200px] left-2                 
+         md:left-[15rem] lg:left-[16.5rem]   
+         px-1 py-2 rounded-2xl shadow
+         text-white bg-gray-700
+         text-md
+         md:text-base 
+         lg:text-md lg:top-4"                          
+  onclick={toggleCamera}
+>
   {detectorRunning ? 'Stop Camera' : 'Start Camera'}
-</button>   
+</button>
 
 <video bind:this={video} autoplay playsinline muted width="10" height="10"  class="fixed top-0 left-0 z-10 bottom-6 right opacity-0  ${detectorRunning ? "opacity-100" : "opacity-0" } "></video>
 
