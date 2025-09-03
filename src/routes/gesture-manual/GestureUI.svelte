@@ -912,17 +912,17 @@
 
 <button
   class="fixed z-50
-         top-[200px] left-2                 
-         md:left-[15rem] lg:left-[16.5rem]   
-         px-1 py-2 rounded-2xl shadow
+         bottom-4 right-4
+         md:bottom-auto md:right-auto
+         md:top-4 md:left-62
+         px-2 py-2 rounded-2xl shadow
          text-white bg-gray-700
-         text-md
-         md:text-base 
-         lg:text-md lg:top-4"                          
+         text-sm sm:text-base lg:text-md"
   onclick={toggleCamera}
 >
   {detectorRunning ? 'Stop Camera' : 'Start Camera'}
 </button>
+
 
 <video bind:this={video} autoplay playsinline muted width="10" height="10"  class="fixed top-0 left-0 z-10 bottom-6 right opacity-0  ${detectorRunning ? "opacity-100" : "opacity-0" } "></video>
 

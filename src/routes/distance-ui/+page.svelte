@@ -121,32 +121,37 @@
 
 <button
   class="fixed z-50
-         top-[200px] left-2                 
-         md:left-[15rem] lg:left-[16.5rem]   
-         px-1 py-2 rounded-2xl shadow
+         bottom-4 right-4
+         md:bottom-auto md:right-auto
+         md:top-4 md:left-62
+         px-2 py-2 rounded-2xl shadow
          text-white bg-gray-700
-         text-md
-         md:text-base 
-         lg:text-md lg:top-4"                          
-  on:click={toggleCamera}
+         text-sm sm:text-base lg:text-md"
+  onclick={toggleCamera}
 >
   {detectorRunning ? 'Stop Camera' : 'Start Camera'}
 </button>
 
 
 
-<main class="flex-1 max-w-6xl mx-auto px-20 justify-center">
-  <h1 class="text-4xl md:text-7xl py-5 text-center font-semibold mb-5">Face Distance UI</h1>
+<main class="flex-1 max-w-6xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20 justify-center">
+  <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl py-5 text-center font-semibold mb-5">
+    Face Distance UI
+  </h1>
 
-  <h2 class="py-2 text-xl md:text-2xl"> Welcome to the Face-Aware Interface!</h2>
-  <p class="text-base md:text-md lg:text-lg px-4">
-    This interactive application tracks your face in real time and adapts the user interface based on how far you are from your screen. No need to touch or click, just move closer or further away. As of right now there is a simple text that asks about your day but this could changed.
+  <h2 class="py-2 text-lg sm:text-xl md:text-2xl text-center"> 
+    Welcome to the Face-Aware Interface!
+  </h2>
+
+  <p class="text-sm sm:text-base md:text-md lg:text-lg px-2 sm:px-4 text-center sm:text-left">
+    This interactive application tracks your face in real time and adapts the user interface based on how far you are from your screen. 
+    No need to touch or click, just move closer or further away. As of right now there is a simple text that asks about your day but this could change.
   </p>
 
-  <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
     <div>
-      <h3 class="py-2 mt-3 text-xl md:text-2xl">How is it powered?</h3>
-      <ul class="list-disc px-6 md:px-10 text-base md:text-md lg:text-lg">
+      <h3 class="py-2 mt-3 text-lg sm:text-xl md:text-2xl font-semibold">How is it powered?</h3>
+      <ul class="list-disc px-4 sm:px-6 md:px-10 text-sm sm:text-base md:text-md lg:text-lg">
         <li>face-api.js for facial detection and landmark recognition in the browser</li>
         <li>A Svelte-based UI that reacts dynamically to your face position</li>
         <li>Webcam input for continuous, non-intrusive distance sensing</li>
@@ -154,8 +159,8 @@
     </div>
 
     <div>
-      <h4 class="py-2 mt-3 text-xl md:text-2xl">How does it work?</h4>
-      <ul class="list-disc px-6 md:px-10 text-base md:text-md lg:text-lg">
+      <h4 class="py-2 mt-3 text-lg sm:text-xl md:text-2xl font-semibold">How does it work?</h4>
+      <ul class="list-disc px-4 sm:px-6 md:px-10 text-sm sm:text-base md:text-md lg:text-lg">
         <li>The app calculates the distance between your eyes using facial landmarks.</li>
         <li>This data is used to estimate your distance from the screen.</li>
         <li>The UI scales text or reacts based on how close or far you are.</li>
@@ -163,8 +168,8 @@
     </div>
 
     <div>
-      <h5 class="py-2 mt-3 text-xl md:text-2xl">Why does this matter?</h5>
-      <ul class="list-disc px-6 md:px-10 text-base md:text-md lg:text-lg">
+      <h5 class="py-2 mt-3 text-lg sm:text-xl md:text-2xl font-semibold">Why does this matter?</h5>
+      <ul class="list-disc px-4 sm:px-6 md:px-10 text-sm sm:text-base md:text-md lg:text-lg">
         <li>Reduces eye strain and encourages healthy screen habits</li>
         <li>Enables distance-aware UX in education, games, and kiosks</li>
         <li>Enables accessible interaction without needing clicks or taps</li>
@@ -172,7 +177,9 @@
     </div>
   </section>
 
-  <p class="text-2xl md:text-4xl text-center mt-10"> Start your camera and watch the interface adjust. </p>
+  <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center mt-10 px-2">
+    Start your camera and watch the interface adjust.
+  </p>
 </main>
 
 
